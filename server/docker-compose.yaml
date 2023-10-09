@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: chatapp
+    ports:
+      - "1506:1506"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
