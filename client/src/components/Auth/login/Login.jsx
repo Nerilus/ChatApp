@@ -8,7 +8,7 @@ export default function Login ()  {
                 <h2>Se connecter</h2>
                 <form action="">
                     <input type="username" placeholder="username"/>
-                    <input type="password" placeholder="password" />
+                    <input type="password" placeholder="votre mot de passe" />
                     <button>ENVOYEZ</button>
                 </form>
             </div>
