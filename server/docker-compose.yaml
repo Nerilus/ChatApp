@@ -1,28 +1,30 @@
 version: '3'
 services:
-  web:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-
-   #Autre service
-  db:
-    # Image MariaDB à utiliser
+  db :
     image: 'mariadb'
-    # Redémarrer toujours en cas d'erreur fatale
     restart: always
-    # Variables d'environnement pour configurer la base de données
     environment:
       MYSQL_DATABASE: chat_app
       MYSQL_ROOT_PASSWORD: password
-    # Mappage du port 3306 du conteneur sur le port 3306 de l'hôte (localhost)
+
     ports:
-      - "3306:3306"
-    # Montage du fichier SQL pour l'initialisation de la base de données
+    - "3306:3306"
     volumes:
-      - ./database/chat_app.sql:/docker-entrypoint-initdb.d/chat_app.sql
+    - ./database/chat_app.sql:/docker-entrypoint-initdb.d/chat_app.sql
+
+  app:
+    depends_on:
+      - db
+    build: /.
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/chat_app?useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
   #Encore un autre service
   phpmyadmin:
