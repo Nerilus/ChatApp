@@ -1,21 +1,40 @@
 version: '3'
 services:
-  web:
-    build: .
+  db :
+    image: 'mariadb'
+    restart: always
+    environment:
+      MYSQL_DATABASE: chat_app
+      MYSQL_ROOT_PASSWORD: password
+
     ports:
-      - "8080:8080"
+    - "3306:3306"
+    volumes:
+    - ./database/chat_app.sql:/docker-entrypoint-initdb.d/chat_app.sql
+
+  app:
     depends_on:
       - db
-
-  db:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: chatapp
+    build: ./
+    restart: on-failure
     ports:
-      - "1506:1506"
-    volumes:
-      - db-data:/var/lib/mysql
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/chat_app?useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
-volumes:
-  db-data:
+  #Encore un autre service
+  phpmyadmin:
+    #image utiliser phpmyadmin
+    image: phpmyadmin
+    #Si erreur fatal redémarage
+    restart: always
+    #Port du conteneur
+    ports:
+      - '8181:80'
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
