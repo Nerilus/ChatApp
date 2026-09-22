@@ -43,7 +43,7 @@ export default function Login() {
             <div className="auth-brand-icon">
               <MessageSquare size={22} />
             </div>
-            <span className="auth-brand-name">ChatApp</span>
+            <span className="auth-brand-name">NexusChat</span>
           </div>
           <p className="auth-subtitle">Bienvenue ! Connectez-vous à votre espace.</p>
         </div>

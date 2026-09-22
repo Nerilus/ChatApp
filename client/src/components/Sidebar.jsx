@@ -63,7 +63,7 @@ export default function Sidebar({
           <div className="brand-badge">
             <MessageSquare size={18} />
           </div>
-          <span className="brand-title">ChatApp</span>
+          <span className="brand-title">NexusChat</span>
         </div>
       </div>
 

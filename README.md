@@ -1,4 +1,4 @@
-# 💬 ChatApp — Plateforme de Communication Temps Réel & Vocale
+# 💬 NexusChat — Plateforme de Communication Temps Réel & Vocale
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
@@ -8,7 +8,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://www.docker.com/)
 [![MariaDB](https://img.shields.io/badge/MariaDB-10.11-003545.svg)](https://mariadb.org/)
 
-**ChatApp** est une application web moderne de messagerie collaborative combinant la fluidité d'une messagerie instantanée, la flexibilité des salons vocaux style **Discord**, la puissance des appels directs pair-à-pair **WebRTC**, et la gestion de présence / statuts d'activité inspirée de **Microsoft Teams**.
+**NexusChat** est une application web moderne de messagerie collaborative combinant la fluidité d'une messagerie instantanée, la flexibilité des salons vocaux style **Discord**, la puissance des appels directs pair-à-pair **WebRTC**, et la gestion de présence / statuts d'activité inspirée de **Microsoft Teams**.
 
 ---
 
@@ -199,7 +199,7 @@ npm run build
 ## 📂 Structure du Répertoire
 
 ```text
-ChatApp/
+NexusChat/
 ├── client/                     # Application Frontend React 18 + Vite
 │   ├── src/
 │   │   ├── components/         # Composants UI (Chat, AudioPlayer, CallModal...)

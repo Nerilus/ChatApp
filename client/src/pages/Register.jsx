@@ -54,7 +54,7 @@ export default function Register() {
             <div className="auth-brand-icon">
               <MessageSquare size={22} />
             </div>
-            <span className="auth-brand-name">ChatApp</span>
+            <span className="auth-brand-name">NexusChat</span>
           </div>
           <p className="auth-subtitle">Rejoignez-nous et discutez en toute sécurité.</p>
         </div>
