@@ -30,6 +30,7 @@ public class User {
 
   @NotBlank
   @Size(max = 120)
+  @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)

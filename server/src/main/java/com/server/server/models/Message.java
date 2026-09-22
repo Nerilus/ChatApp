@@ -21,6 +21,14 @@ public class Message {
 
     private Date date;
     private String content;
+
+    @Column(name = "message_type")
+    private String messageType = "TEXT";
+
+    @Column(name = "media_url")
+    private String mediaUrl;
+
+    private Integer duration;
     
     public Message() {}
 
@@ -57,5 +65,26 @@ public class Message {
     }
     public void setContent(String value) {
       this.content = value;
+    }
+
+    public String getMessageType() {
+      return this.messageType;
+    }
+    public void setMessageType(String messageType) {
+      this.messageType = messageType;
+    }
+
+    public String getMediaUrl() {
+      return this.mediaUrl;
+    }
+    public void setMediaUrl(String mediaUrl) {
+      this.mediaUrl = mediaUrl;
+    }
+
+    public Integer getDuration() {
+      return this.duration;
+    }
+    public void setDuration(Integer duration) {
+      this.duration = duration;
     }
 }

@@ -1,61 +1,46 @@
-version: '3'
 services:
-  mercure:
-      image: dunglas/mercure
-      restart: unless-stopped
-      environment:
-        # Uncomment the following line to disable HTTPS
-        SERVER_NAME: ':80'
-        MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
-        MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
-      # Uncomment the following line to enable the development mode
-      command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
-      ports:
-        - '80:80'
-        - '443:443'
-      # volumes:
-      #   - mercure_data:/data
-      #   - mercure_config:/config
-
-  # volumes:
-  #   mercure_data:
-  #   mercure_config:
-
-  db :
-    image: 'mariadb'
+  db:
+    image: 'mariadb:10.11'
+    container_name: chatapp-db
     restart: always
     environment:
       MYSQL_DATABASE: chat_app
       MYSQL_ROOT_PASSWORD: password
-
     ports:
-    - "3306:3306"
+      - "3306:3306"
     volumes:
-    - ./database/chat_app.sql:/docker-entrypoint-initdb.d/chat_app.sql
+      - ./database/chat_app.sql:/docker-entrypoint-initdb.d/chat_app.sql
+      - mariadb_data:/var/lib/mysql
 
   app:
+    container_name: chatapp-backend
     depends_on:
       - db
     build: ./
     restart: on-failure
     ports:
-      - "8282:8080"
+      - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/chat_app?useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/chat_app?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JWT_SECRET: Y2hhdEFwcFN1cGVyU2VjcmV0S2V5Rm9ySldUVG9rZW5TaWduaW5nMTIzNDU2Nzg5MDEyMzQ1Ng==
+    volumes:
+      - ./uploads:/uploads
 
-  #Encore un autre service
   phpmyadmin:
-    #image utiliser phpmyadmin
-    image: phpmyadmin
-    #Si erreur fatal redémarage
+    image: phpmyadmin:latest
+    container_name: chatapp-phpmyadmin
     restart: always
-    #Port du conteneur
     ports:
       - '8181:80'
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
+      - PMA_HOST=db
+    depends_on:
+      - db
+
+volumes:
+  mariadb_data:

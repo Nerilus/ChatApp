@@ -50,6 +50,8 @@ public class JwtUtils {
     try {
       Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
       return true;
+    } catch (io.jsonwebtoken.security.SignatureException | SecurityException e) {
+      logger.error("Invalid JWT signature: {}", e.getMessage());
     } catch (MalformedJwtException e) {
       logger.error("Invalid JWT token: {}", e.getMessage());
     } catch (ExpiredJwtException e) {
